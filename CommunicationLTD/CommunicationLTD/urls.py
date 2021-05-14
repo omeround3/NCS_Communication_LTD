@@ -18,6 +18,6 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('', include('core.urls')), # path('core.urls', include('core.urls.urls')) To enter LoginApp with http://127.0.0.1:8000/core
-    path('admin/', admin.site.urls),
+    path('', include('core.urls')), 
+    path('admin/', admin.site.urls), # Do not delete
 ]

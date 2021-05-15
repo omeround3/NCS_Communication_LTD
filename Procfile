@@ -1,2 +1,2 @@
 release: python3 manage.py migrate
-web: gunicorn gettingstarted.wsgi 
+web: gunicorn NCS_Communication_LTD.wsgi 

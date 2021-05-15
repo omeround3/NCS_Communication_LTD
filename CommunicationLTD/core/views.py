@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm, NewUserForm
 from django.core.mail import send_mail, BadHeaderError
-from django.contrib.auth import login, authenticate 
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages 
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
@@ -42,6 +42,12 @@ def login_request(request):
 			messages.error(request,"Invalid username or password.")
 	form = AuthenticationForm()
 	return render(request=request, template_name="main/login.html", context={"login_form":form})
+
+# Logout view
+def logout_request(request):
+	logout(request)
+	messages.info(request, "You have successfully logged out.") 
+	return redirect('/')
 
 # Registiration views
 def register_request(request):

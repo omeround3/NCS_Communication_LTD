@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import ContactForm, NewUserForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate 
-from django.contrib import messages #import messages
+from django.contrib import messages 
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 

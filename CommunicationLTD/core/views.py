@@ -6,8 +6,11 @@ from django.contrib import messages #import messages
 from django.http import HttpResponse
 
 # Create your views here.
-def login(request):
-    return HttpResponse("Login Page.")
+# def login(request):
+#     return HttpResponse("Login Page.")
+
+def login_request(request):
+	return HttpResponse("Login Page")
 
 def homepage(request):
 	return render(request, "main/home.html")
@@ -22,7 +25,7 @@ def register_request(request):
 		if form.is_valid():
 			 # If the form is valid, save the user and login
 			user = form.save()
-			# login(request, user)
+			login(request, user)
 			messages.success(request, "Registration successful." )
 			# Redirect to homepage
 			return redirect('/')

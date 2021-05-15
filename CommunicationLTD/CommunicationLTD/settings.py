@@ -11,11 +11,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import json
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+with open(os.path.join(BASE_DIR, 'CommunicationLTD\pass_req.json')) as f:
+    PASS_REQ = json.load(f)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -38,6 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Daniel - Added for password history validation
+    'django_password_validators',
+    # Daniel - Added for password history validation
+    'django_password_validators.password_history',
     'core',
     'crispy_forms',
 ]
@@ -93,16 +101,24 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator',
+        'OPTIONS': {
+                'min_length_digit': PASS_REQ["password_content"]["min_length_digit"],
+                'min_length_alpha': PASS_REQ["password_content"]["min_length_alpha"],
+                'min_length_special': PASS_REQ["password_content"]["min_length_special"],
+                'min_length_lower': PASS_REQ["password_content"]["min_length_lower"],
+                'min_length_upper': PASS_REQ["password_content"]["min_length_upper"],
+                'special_characters': PASS_REQ["password_content"]["special_characters"]
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': PASS_REQ["min_length"],
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -138,4 +154,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

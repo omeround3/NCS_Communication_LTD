@@ -19,7 +19,7 @@ from django.contrib.messages import constants as messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-with open(os.path.join(BASE_DIR, 'CommunicationLTD\pass_req.json')) as f:
+with open(os.path.join(BASE_DIR, 'CommunicationLTD/pass_req.json')) as f:
     PASS_REQ = json.load(f)
 
 # Quick-start development settings - unsuitable for production

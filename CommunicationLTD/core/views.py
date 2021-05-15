@@ -1,20 +1,45 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm, NewUserForm
 from django.core.mail import send_mail, BadHeaderError
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate 
 from django.contrib import messages #import messages
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 
+
 # Create your views here.
-# def login(request):
-#     return HttpResponse("Login Page.")
 
-def login_request(request):
-	return HttpResponse("Login Page")
-
+# Homepage view
 def homepage(request):
 	return render(request, "main/home.html")
 
+# Login view
+def login_request(request):
+	# The request method 'POST' indicates
+    # that the form was submitted
+	if request.method == "POST":
+		# Create a form instance with the submitted data
+		form = AuthenticationForm(request, data=request.POST)
+		# Validate the form
+		if form.is_valid():
+			# If the form is valid, get the user credenetials
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password')
+			# Authentication of the user
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request, user)
+				messages.info(request, f"You are now logged in as {username}.")
+				# Redirect to homepage
+				return redirect('/')
+			else:
+				messages.error(request,"Invalid username or password.")
+		else:
+			messages.error(request,"Invalid username or password.")
+	form = AuthenticationForm()
+	return render(request=request, template_name="main/login.html", context={"login_form":form})
+
+# Registiration views
 def register_request(request):
 	# The request method 'POST' indicates
     # that the form was submitted

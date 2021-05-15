@@ -9,6 +9,10 @@ from django.http import HttpResponse
 
 # Create your views here.
 
+# Index view
+def index(request):
+	return render(request, "main/index.html")
+
 # Homepage view
 def homepage(request):
 	return render(request, "main/home.html")

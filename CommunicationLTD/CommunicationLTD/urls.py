@@ -16,11 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+
 urlpatterns = [
-    path('', include('LoginApp.urls')), # path('LoginApp', include('LoginApp.urls')) To enter LoginApp with http://127.0.0.1:8000/LoginApp
-    path('ForgotPassword/', include('ForgotPasswordApp.urls')),
-    path('Register/', include('RegisterApp.urls')),
-    path('System/', include('SystemApp.urls')),
-    path('ChangePassword/', include('ChangePasswordApp.urls')),
-    path('admin/', admin.site.urls),
+    path('', include('core.urls')), 
+    path('admin/', admin.site.urls), # Do not delete
 ]

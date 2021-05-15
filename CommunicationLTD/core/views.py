@@ -13,13 +13,19 @@ def homepage(request):
 	return render(request, "main/home.html")
 
 def register_request(request):
+	# The request method 'POST' indicates
+    # that the form was submitted
 	if request.method == "POST":
+		# Create a form instance with the submitted data
 		form = NewUserForm(request.POST)
+		# Validate the form
 		if form.is_valid():
+			 # If the form is valid, save the user and login
 			user = form.save()
-			login(request, user)
+			# login(request, user)
 			messages.success(request, "Registration successful." )
-			return redirect("main:homepage")
+			# Redirect to homepage
+			return redirect('/')
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm
 	return render (request=request, template_name="main/register.html", context={"register_form":form})

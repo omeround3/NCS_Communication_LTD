@@ -78,3 +78,12 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})
+
+def dashboard_request(request):
+	if request.user.is_authenticated:
+		return render(request, "main/dashboard.html")
+	else:
+		return render(request, "main/401.html")
+
+def clients_request(request):
+	return render(request, "main/clients.html")

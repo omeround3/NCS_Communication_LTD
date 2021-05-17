@@ -1,8 +1,8 @@
 @charset "UTF-8";
 /*!
-* Start Bootstrap - Landing Page v5.1.0 (https://startbootstrap.com/theme/landing-page)
+* Start Bootstrap - SB Admin v6.0.3 (https://startbootstrap.com/template/sb-admin)
 * Copyright 2013-2021 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-landing-page/blob/master/LICENSE)
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
 */
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
@@ -10,9 +10,6 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-
- @import "styles2.css";
-
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -63,7 +60,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -363,7 +360,7 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.5rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
 }
 
@@ -548,8 +545,8 @@ pre code {
 .container-md,
 .container-sm {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
 }
@@ -577,8 +574,8 @@ pre code {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
 }
 
 .no-gutters {
@@ -599,8 +596,8 @@ pre code {
 .col-auto, .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
 }
 
 .col {
@@ -5592,7 +5589,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5694,7 +5691,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6583,6 +6580,22 @@ button.bg-dark:focus {
   padding-top: 100%;
 }
 
+.embed-responsive-21by9::before {
+  padding-top: 42.8571428571%;
+}
+
+.embed-responsive-16by9::before {
+  padding-top: 56.25%;
+}
+
+.embed-responsive-4by3::before {
+  padding-top: 75%;
+}
+
+.embed-responsive-1by1::before {
+  padding-top: 100%;
+}
+
 .flex-row {
   flex-direction: row !important;
 }
@@ -7379,7 +7392,7 @@ button.bg-dark:focus {
   position: sticky !important;
 }
 
-.fixed-top {
+.fixed-top, .sb-nav-fixed #layoutSidenav #layoutSidenav_nav, .sb-nav-fixed .sb-topnav {
   position: fixed;
   top: 0;
   right: 0;
@@ -10009,271 +10022,250 @@ h3 {
     border-color: #dee2e6;
   }
 }
-.features-icons {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+html,
+body {
+  height: 100%;
 }
-.features-icons .features-icons-item {
+
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+#layoutAuthentication {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#layoutAuthentication #layoutAuthentication_content {
+  min-width: 0;
+  flex-grow: 1;
+}
+#layoutAuthentication #layoutAuthentication_footer {
+  min-width: 0;
+}
+
+#layoutSidenav {
+  display: flex;
+}
+#layoutSidenav #layoutSidenav_nav {
+  flex-basis: 225px;
+  flex-shrink: 0;
+  transition: transform 0.15s ease-in-out;
+  z-index: 1038;
+  transform: translateX(-225px);
+}
+#layoutSidenav #layoutSidenav_content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  flex-grow: 1;
+  min-height: calc(100vh - 56px);
+  margin-left: -225px;
+}
+
+.sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+  transform: translateX(0);
+}
+.sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 1037;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+
+@media (min-width: 992px) {
+  #layoutSidenav #layoutSidenav_nav {
+    transform: translateX(0);
+  }
+  #layoutSidenav #layoutSidenav_content {
+    margin-left: 0;
+    transition: margin 0.15s ease-in-out;
+  }
+
+  .sb-sidenav-toggled #layoutSidenav #layoutSidenav_nav {
+    transform: translateX(-225px);
+  }
+  .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content {
+    margin-left: -225px;
+  }
+  .sb-sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
+    display: none;
+  }
+}
+.sb-nav-fixed .sb-topnav {
+  z-index: 1039;
+}
+.sb-nav-fixed #layoutSidenav #layoutSidenav_nav {
+  width: 225px;
+  height: 100vh;
+  z-index: 1038;
+}
+.sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav {
+  padding-top: 56px;
+}
+.sb-nav-fixed #layoutSidenav #layoutSidenav_nav .sb-sidenav .sb-sidenav-menu {
+  overflow-y: auto;
+}
+.sb-nav-fixed #layoutSidenav #layoutSidenav_content {
+  padding-left: 225px;
+  top: 56px;
+}
+
+#layoutError {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#layoutError #layoutError_content {
+  min-width: 0;
+  flex-grow: 1;
+}
+#layoutError #layoutError_footer {
+  min-width: 0;
+}
+
+.img-error {
   max-width: 20rem;
 }
-.features-icons .features-icons-item .features-icons-icon {
-  height: 7rem;
-}
-.features-icons .features-icons-item .features-icons-icon i {
-  font-size: 4.5rem;
-}
-.features-icons .features-icons-item:hover .features-icons-icon i {
-  font-size: 5rem;
+
+.nav .nav-link .sb-nav-link-icon,
+.sb-sidenav-menu .nav-link .sb-nav-link-icon {
+  margin-right: 0.5rem;
 }
 
-header.masthead {
-  position: relative;
-  background-color: #343a40;
-  background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
-  background-size: cover;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+.sb-topnav {
+  padding-left: 0;
+  height: 56px;
+  z-index: 1039;
 }
-header.masthead .overlay {
-  position: absolute;
-  background-color: #212529;
+.sb-topnav .navbar-brand {
+  width: 225px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0;
+}
+.sb-topnav.navbar-dark #sidebarToggle {
+  color: rgba(255, 255, 255, 0.5);
+}
+.sb-topnav.navbar-light #sidebarToggle {
+  color: #212529;
+}
+
+.sb-sidenav {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
+  flex-wrap: nowrap;
 }
-header.masthead h1 {
-  font-size: 2rem;
+.sb-sidenav .sb-sidenav-menu {
+  flex-grow: 1;
 }
-@media (min-width: 768px) {
-  header.masthead {
-    padding-top: 12rem;
-    padding-bottom: 12rem;
-  }
-  header.masthead h1 {
-    font-size: 3rem;
-  }
+.sb-sidenav .sb-sidenav-menu .nav {
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
-
-.showcase .showcase-text {
-  padding: 3rem;
+.sb-sidenav .sb-sidenav-menu .nav .sb-sidenav-menu-heading {
+  padding: 1.75rem 1rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
-.showcase .showcase-img {
-  min-height: 30rem;
-  background-size: cover;
-}
-@media (min-width: 768px) {
-  .showcase .showcase-text {
-    padding: 7rem;
-  }
-}
-
-.testimonials {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
-}
-.testimonials .testimonial-item {
-  max-width: 18rem;
-}
-.testimonials .testimonial-item img {
-  max-width: 12rem;
-  box-shadow: 0px 5px 5px 0px #adb5bd;
-}
-
-.call-to-action {
+.sb-sidenav .sb-sidenav-menu .nav .nav-link {
+  display: flex;
+  align-items: center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   position: relative;
-  background-color: #343a40;
-  background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
-  background-size: cover;
-  padding-top: 7rem;
-  padding-bottom: 7rem;
 }
-.call-to-action .overlay {
-  position: absolute;
+.sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
+  font-size: 0.9rem;
+}
+.sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-sidenav-collapse-arrow {
+  display: inline-block;
+  margin-left: auto;
+  transition: transform 0.15s ease;
+}
+.sb-sidenav .sb-sidenav-menu .nav .nav-link.collapsed .sb-sidenav-collapse-arrow {
+  transform: rotate(-90deg);
+}
+.sb-sidenav .sb-sidenav-menu .nav .sb-sidenav-menu-nested {
+  margin-left: 1.5rem;
+  flex-direction: column;
+}
+.sb-sidenav .sb-sidenav-footer {
+  padding: 0.75rem;
+  flex-shrink: 0;
+}
+
+.sb-sidenav-dark {
   background-color: #212529;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
+  color: rgba(255, 255, 255, 0.5);
 }
-
-footer.footer {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+.sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
+  color: rgba(255, 255, 255, 0.25);
 }
-
-/* 'Open Sans' font from Google Fonts */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-
-body {
-  font-family: 'Open Sans', sans-serif;
+.sb-sidenav-dark .sb-sidenav-menu .nav-link {
+  color: rgba(255, 255, 255, 0.5);
 }
-
-.login {
-  width: 400px;
-  margin: 16px auto;
-  font-size: 16px;
+.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon {
+  color: rgba(255, 255, 255, 0.25);
 }
-
-/* Reset top and bottom margins from certain elements */
-.login-header,
-.login p {
-  margin-top: 0;
-  margin-bottom: 0;
+.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
+  color: rgba(255, 255, 255, 0.25);
 }
-
-/* The triangle form is achieved by a CSS hack */
-.login-triangle {
-  width: 0;
-  margin-right: auto;
-  margin-left: auto;
-  border: 12px solid transparent;
-  border-bottom-color: #28d;
-}
-
-.login-header {
-  background: #28d;
-  padding: 20px;
-  font-size: 1.4em;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
+.sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
   color: #fff;
 }
-
-.login-container {
-  background: #ebebeb;
-  padding: 12px;
-}
-
-/* Every row inside .login-container is defined with p tags */
-.login p {
-  padding: 12px;
-}
-
-.login input {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  padding: 16px;
-  outline: 0;
-  font-family: inherit;
-  font-size: 0.95em;
-}
-
-.login input[type="email"],
-.login input[type="password"] {
-  background: #fff;
-  border-color: #bbb;
-  color: #555;
-}
-
-/* Text fields' focus effect */
-.login input[type="email"]:focus,
-.login input[type="password"]:focus {
-  border-color: #888;
-}
-
-.login input[type="submit"] {
-  background: #28d;
-  border-color: transparent;
-  color: #fff;
-  cursor: pointer;
-}
-
-.login input[type="submit"]:hover {
-  background: #17c;
-}
-
-/* Buttons' focus effect */
-.login input[type="submit"]:focus {
-  border-color: #05a;
-}
-
-/* Registeration Form */
-.register {
-  width: 800px;
-  margin: 16px auto;
-  font-size: 16px;
-}
-
-/* Reset top and bottom margins from certain elements */
-.register-header,
-.register p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-/* The triangle form is achieved by a CSS hack */
-.register-triangle {
-  width: 0;
-  margin-right: auto;
-  margin-left: auto;
-  border: 12px solid transparent;
-  border-bottom-color: #28d;
-}
-
-.register-header {
-  background: #28d;
-  padding: 20px;
-  font-size: 1.4em;
-  font-weight: normal;
-  text-align: center;
-  text-transform: uppercase;
+.sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
   color: #fff;
 }
-
-.register-container {
-  background: #ebebeb;
-  padding: 12px;
-}
-
-/* Every row inside .register-container is defined with p tags */
-.register p {
-  padding: 12px;
-}
-
-.register input {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  padding: 16px;
-  outline: 0;
-  font-family: inherit;
-  font-size: 0.95em;
-}
-
-.register input[type="email"],
-.register input[type="password"] {
-  background: #fff;
-  border-color: #bbb;
-  color: #555;
-}
-
-/* Text fields' focus effect */
-.register input[type="email"]:focus,
-.register input[type="password"]:focus {
-  border-color: #888;
-}
-
-.register input[type="submit"] {
-  background: #28d;
-  border-color: transparent;
+.sb-sidenav-dark .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
   color: #fff;
-  cursor: pointer;
+}
+.sb-sidenav-dark .sb-sidenav-footer {
+  background-color: #343a40;
 }
 
-.register input[type="submit"]:hover {
-  background: #17c;
+.sb-sidenav-light {
+  background-color: #f8f9fa;
+  color: #212529;
 }
-
-/* Buttons' focus effect */
-.register input[type="submit"]:focus {
-  border-color: #05a;
+.sb-sidenav-light .sb-sidenav-menu .sb-sidenav-menu-heading {
+  color: #adb5bd;
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link {
+  color: #212529;
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link .sb-nav-link-icon {
+  color: #adb5bd;
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
+  color: #adb5bd;
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link:hover {
+  color: #007bff;
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link.active {
+  color: #007bff;
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
+  color: #007bff;
+}
+.sb-sidenav-light .sb-sidenav-footer {
+  background-color: #e9ecef;
 }

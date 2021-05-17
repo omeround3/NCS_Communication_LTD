@@ -19,20 +19,25 @@
         <a class="nav-link" href="/logout">Logout</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+        <a class="nav-link" href="/#">Welcome, {{user.username}}</a>
       </li>
+      </ul>
+      <div>
+        <a class="btn btn-primary" href="/changepassword">Change Password</a>
+      </div>
 
       {% else %}
 
       <li class="nav-item">
         <a class="nav-link">Welcome! Please login to get the best experience from our website</a>
       </li>
+      </ul>
+      <div>
+        <a class="btn btn-primary" href="/login">Login</a>
+      </div>
 
       {% endif %}
-    </ul>
-  </div>
-        <a class="btn btn-primary" href="login">Login</a>
-    </div>
+
 </nav>
 <!-- Masthead-->
 <header class="masthead text-white text-center">

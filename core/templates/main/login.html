@@ -13,11 +13,25 @@
   <form class="login-container" method="POST">
     {% csrf_token %}
     {{ login_form | crispy }}
-    <button class="btn btn-primary" type="submit">Login</button>
+    <div class="col-xl-9 mx-auto">
+      <div class="col-xl-5 mx-auto" >
+        <button class="btn btn-primary" type="submit">Login</button>
+      </div>
+    </div> 
   </form>
-  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+  <p class="text-center">Don't have an account? <a href="/register">Sign up</a></p>
   <div class="text-center"><a href="password_reset">Forgot your password?</a></div>
+  <p class="text-center"><a href="/">Return home</a></p>
 </div>
 
+<div id="layoutAuthentication_footer">
+	<footer class="py-4 bg-light mt-auto">
+		<div class="container-fluid">
+			<div class="d-flex align-items-center justify-content-between small">
+				<div class="text-muted">Copyright &copy; Communication LTD 2021</div>
+			</div>
+		</div>
+	</footer>
+</div>
 
 {% endblock %}

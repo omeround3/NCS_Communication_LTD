@@ -13,10 +13,6 @@ from django.http import HttpResponse
 def index(request):
 	return render(request, "main/index.html")
 
-# Homepage view
-def homepage(request):
-	return render(request, "main/home.html")
-
 # Login view
 def login_request(request):
 	# The request method 'POST' indicates
@@ -66,4 +62,4 @@ def register_request(request):
 			return redirect('/')
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm
-	return render (request=request, template_name="main/register.html", context={"register_form":form})
+	return render(request=request, template_name="main/register.html", context={"register_form":form})

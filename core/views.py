@@ -76,5 +76,19 @@ def change_password(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
+<<<<<<< HEAD
         form = MyPasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})
+=======
+        form = PasswordChangeForm(request.user)
+    return render(request, 'main/changepassword.html', {'form': form})
+
+def dashboard_request(request):
+	if request.user.is_authenticated:
+		return render(request, "main/dashboard.html")
+	else:
+		return render(request, "main/401.html")
+
+def clients_request(request):
+	return render(request, "main/clients.html")
+>>>>>>> 07d88629401ba59b59a0a4ba681a47a272d50b6c

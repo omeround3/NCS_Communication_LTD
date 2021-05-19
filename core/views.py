@@ -78,3 +78,17 @@ def change_password(request):
     else:
         form = MyPasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})
+
+# Wrapper function to check user authentication
+def check_user_authentication(request, path):
+	if request.user.is_authenticated:
+		return render(request, 'main/{0}'.format(path))
+	else:
+		return render(request, 'main/401.html')
+
+def dashboard_request(request):
+	return check_user_authentication(request, 'dashboard.html')
+	
+
+def clients_request(request):
+	return check_user_authentication(request, 'clients.html')

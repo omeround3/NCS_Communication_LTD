@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 from django.contrib import messages 
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.http import HttpResponse
-
+from .utils import MyPasswordChangeForm
 
 # Create your views here.
 
@@ -57,7 +57,7 @@ def register_request(request):
 			 # If the form is valid, save the user and login
 			user = form.save()
 			login(request, user)
-			messages.success(request, "Registration successful." )
+			messages.success(request, "Registration successful, You are now logged in" )
 			# Redirect to homepage
 			return redirect('/')
 		messages.error(request, "Unsuccessful registration. Invalid information.")
@@ -67,7 +67,7 @@ def register_request(request):
 # Change password view
 def change_password(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = MyPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
@@ -76,5 +76,5 @@ def change_password(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = PasswordChangeForm(request.user)
+        form = MyPasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ContactForm, NewUserForm
+from .forms import ContactForm, NewUserForm, ClientForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib import messages
@@ -11,14 +11,10 @@ from .models import Client
 # Create your views here.
 
 # Index view
-
-
 def index(request):
     return render(request, "main/index.html")
 
 # Login view
-
-
 def login_request(request):
     # The request method 'POST' indicates
     # that the form was submitted
@@ -45,16 +41,12 @@ def login_request(request):
     return render(request=request, template_name="main/login.html", context={"login_form": form})
 
 # Logout view
-
-
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect('/')
 
 # Registiration views
-
-
 def register_request(request):
     # The request method 'POST' indicates
     # that the form was submitted
@@ -76,8 +68,6 @@ def register_request(request):
     return render(request=request, template_name="main/register.html", context={"register_form": form})
 
 # Change password view
-
-
 def change_password(request):
     if request.method == 'POST':
         form = MyPasswordChangeForm(request.user, request.POST)
@@ -94,8 +84,6 @@ def change_password(request):
     return render(request, 'main/changepassword.html', {'form': form})
 
 # Wrapper function to check user authentication
-
-
 def check_user_authentication(request, path):
     if request.user.is_authenticated:
         return render(request, 'main/{0}'.format(path))
@@ -104,26 +92,32 @@ def check_user_authentication(request, path):
 
 
 def dashboard_request(request):
-    clients = Client.objects.all()
-    return render(request, 'main/dashboard.html', {'clients': clients})
+    if request.user.is_authenticated:
+        clients = Client.objects.all()
+        return render(request, 'main/dashboard.html', {'clients': clients})
+    else:
+        return render(request, 'main/401.html')
     # return check_user_authentication(request, 'dashboard.html')
 
 
 def clients_request(request):
-    clients = Client.objects.all()
-    return render(request, 'main/clients.html', {'clients': clients})
+    if request.user.is_authenticated:
+        clients = Client.objects.all()
+        if request.method == "POST":
+            # Create a form instance with the submitted data
+            form = ClientForm(request.POST)
+            # Validate the form
+            if form.is_valid():
+                # If the form is valid, get the user credenetials
+                form.save()
+                messages.success(request, f"You have successfully added a new client.")
+                # Redirect to clients page
+                return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
+            else:
+                messages.error(request, "Error creating a new client.")
+        form = ClientForm
+        return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
+    else:
+        return render(request, 'main/401.html')
     # return check_user_authentication(request, 'clients.html')
 
-
-def newClient(request):
-    if request.method == 'POST':
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        email = request.POST.get("email")
-        cellphone = request.POST.get("cellphone")
-        bandwidth = request.POST.get("bandwidth")
-        cost = request.POST.get("cost")
-        ref = Client(first_name=first_name, last_name=last_name, email=email,
-                     cellphone=cellphone, bandwidth=bandwidth, cost=cost)
-        ref.save()
-        return clients_request(request)

@@ -7,7 +7,7 @@ class Client(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=254)
-    cellphone = models.CharField(max_length=15)
+    cellphone = models.CharField(max_length=20)
     SUBSCRIPTION = [
         ('150', '150 Mbps'),
         ('500', '500 Mbps'),

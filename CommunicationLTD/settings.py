@@ -12,8 +12,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 import json
+import sys
+import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from django.core.management.utils import get_random_secret_key
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,12 +30,13 @@ with open(os.path.join(BASE_DIR, 'CommunicationLTD/pass_req.json')) as f:
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yx4(-8l*zp5@v4a@ik3*q^=9ht@@xz50k1!s8s)79zw-&)qie&'
+# SECRET_KEY = 'django-insecure-yx4(-8l*zp5@v4a@ik3*q^=9ht@@xz50k1!s8s)79zw-&)qie&'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())    # Random secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 
 # Application definition
@@ -55,7 +60,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,6 +88,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CommunicationLTD.wsgi.application'
 
+
+# Set development mode
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -181,6 +188,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
@@ -201,11 +209,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-# Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

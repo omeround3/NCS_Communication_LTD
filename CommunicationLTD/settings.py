@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Daniel - Added for password history validation
+    # Daniel - Added for password history validation #
     'django_password_validators',
-    # Daniel - Added for password history validation
+    # Daniel - Added for password history validation #
     'django_password_validators.password_history',
     'core',
     'crispy_forms',

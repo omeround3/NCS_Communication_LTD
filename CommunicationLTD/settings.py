@@ -105,6 +105,7 @@ DATABASES = {
         'PORT': '3306'
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -188,7 +189,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "./core/static"),
+# )
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

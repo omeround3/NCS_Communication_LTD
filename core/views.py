@@ -119,5 +119,11 @@ def clients_request(request):
         return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
     else:
         return render(request, 'main/401.html')
-    # return check_user_authentication(request, 'clients.html')
+
+
+def dread_request(request):
+    if request.user.is_authenticated:
+        return render(request=request, template_name="main/dread.html")
+    else:
+        return render(request, 'main/401.html')
 

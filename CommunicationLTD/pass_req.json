@@ -10,5 +10,7 @@
     "min_length_lower": 1,
     "min_length_upper": 1,
     "special_characters": "~!@#$%^&*()_+{}\":;'[]"
-  }
+  },
+
+  "login_attemps_limit":3
 }

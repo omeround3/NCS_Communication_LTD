@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_password_validators.password_history',
     'core',
     'crispy_forms',
+    'axes',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -65,7 +66,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend',
+    ]
 
 ROOT_URLCONF = 'CommunicationLTD.urls'
 
@@ -182,6 +188,8 @@ USE_L10N = True
 USE_TZ = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AXES_LOGIN_FAILURE_LIMIT = PASS_REQ["login_attemps_limit"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

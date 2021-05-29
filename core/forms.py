@@ -34,4 +34,4 @@ class ClientForm(ModelForm):
 		fields = ['first_name', 'last_name', 'email', 'cellphone', 'bandwidth', 'cost']
 
 class NewPasswordResetForm(forms.Form):
-	verification_code = forms.CharField(label='verification code')
+	verification_code = forms.CharField(required=True,label='Verification Code')

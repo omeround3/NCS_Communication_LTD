@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import ContactForm, NewUserForm, ClientForm, NewPasswordResetForm
+from .forms import NewUserForm, ClientForm, NewPasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect, HttpResponseNotFound
 from .utils import *
 from .models import Client
 from django.contrib.auth.models import User
@@ -90,27 +90,19 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})
 
-# Wrapper function to check user authentication
-def check_user_authentication(request, path):
-    if request.user.is_authenticated:
-        return render(request, 'main/{0}'.format(path))
-    else:
-        return render(request, 'main/401.html')
-
 
 def dashboard_request(request):
     if request.user.is_authenticated:
         clients = Client.objects.all()
         return render(request, 'main/dashboard.html', {'clients': clients})
     else:
-        return render(request, 'main/401.html')
-    # return check_user_authentication(request, 'dashboard.html')
+        return render(request, '401.html')
 
 
 def clients_request(request):
     if request.user.is_authenticated:
         clients = Client.objects.all()
-        if request.method == "POST":
+        if request.method == 'POST':
             # Create a form instance with the submitted data
             form = ClientForm(request.POST)
             # Validate the form
@@ -125,13 +117,13 @@ def clients_request(request):
         form = ClientForm
         return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
     else:
-        return render(request, 'main/401.html')
+        return render(request, '401.html')
 
 def dread_request(request):
     if request.user.is_authenticated:
-        return render(request=request, template_name="main/dread.html")
+        return render(request=request, template_name='main/dread.html')
     else:
-        return render(request, 'main/401.html')
+        return render(request, '401.html')
 
 # Password reset Main page 
 def password_reset_request(request):
@@ -160,9 +152,9 @@ def password_reset_request(request):
 						send_mail(subject, email, 'CommunicationLTD@example.com' , [user.email], fail_silently=False)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
-					return redirect ("/reset_done")
+					return redirect ('/reset_done')
 	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form":password_reset_form})
+	return render(request=request, template_name='main/password/password_reset.html', context={'password_reset_form':password_reset_form})
 
 # Password validate verification code
 def password_reset_done(request):
@@ -180,8 +172,8 @@ def password_reset_done(request):
 			if token == user_token:
 				return redirect ('password_reset_confirm',uidb64 = uid, token = token)
 			else:
-				return redirect("/password_reset")
+				return redirect('/password_reset')
 	form = NewPasswordResetForm()
-	return render(request=request, template_name="main/password/password_reset_done.html", context={"form":form})
+	return render(request=request, template_name='main/password/password_reset_done.html', context={'form':form})
 
 

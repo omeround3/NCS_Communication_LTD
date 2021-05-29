@@ -12,5 +12,6 @@
     "special_characters": "~!@#$%^&*()_+{}\":;'[]"
   },
 
-  "login_attemps_limit":3
+  "login_attemps_limit":3,
+  "login_block_cooldown": 1
 }

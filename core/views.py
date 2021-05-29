@@ -4,7 +4,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from .utils import *
 from .models import Client
 from django.contrib.auth.models import User
@@ -43,6 +43,7 @@ def login_request(request):
                 messages.error(request, "Invalid username or password.")
         else:
             messages.error(request, "Invalid username or password.")
+            return HttpResponseRedirect("/login")
     form = AuthenticationForm()
     return render(request=request, template_name="main/login.html", context={"login_form": form})
 

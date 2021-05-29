@@ -8,13 +8,6 @@ from core.models import Client
 
 # Create your forms here.
 
-
-class ContactForm(forms.Form):
-	first_name = forms.CharField(max_length = 50)
-	last_name = forms.CharField(max_length = 50)
-	email_address = forms.EmailField(max_length = 150)
-	message = forms.CharField(widget = forms.Textarea, max_length = 2000)
-    
 class NewUserForm(UserCreationForm):
 	# email = forms.EmailField(required=True)
 	email = forms.CharField(required=True)
@@ -49,4 +42,4 @@ class ClientSearchForm(forms.Form):
 	search_str = forms.CharField(label='search user')
 
 class NewPasswordResetForm(forms.Form):
-	verification_code = forms.CharField(label='verification code')
+	verification_code = forms.CharField(required=True,label='Verification Code')

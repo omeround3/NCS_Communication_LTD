@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.http import HttpResponse
-from .utils import MyPasswordChangeForm
+from .utils import *
 from .models import Client
 
 # Create your views here.
@@ -29,7 +29,7 @@ def login_request(request):
             # Authentication of the user
             user = authenticate(username=username, password=password)
             if user is not None:
-                login(request, user)
+                login(request, user,backend='django.contrib.auth.backends.ModelBackend')
                 messages.info(request, f"You are now logged in as {username}.")
                 # Redirect to homepage
                 return redirect('/')
@@ -57,7 +57,7 @@ def register_request(request):
         if form.is_valid():
             # If the form is valid, save the user and login
             user = form.save()
-            login(request, user)
+            login(request, user,backend='django.contrib.auth.backends.ModelBackend')
             messages.success(
                 request, "Registration successful, You are now logged in")
             # Redirect to homepage
@@ -70,7 +70,7 @@ def register_request(request):
 # Change password view
 def change_password(request):
     if request.method == 'POST':
-        form = MyPasswordChangeForm(request.user, request.POST)
+        form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
@@ -80,7 +80,7 @@ def change_password(request):
         else:
             messages.error(request, 'Please correct the error below.')
     else:
-        form = MyPasswordChangeForm(request.user)
+        form = PasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})
 
 # Wrapper function to check user authentication

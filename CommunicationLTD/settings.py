@@ -136,30 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
-]
-
-AUTH_PASSWORD_VALIDATORS_CHANGE = [
-    {
-        'NAME': 'django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator',
-        'OPTIONS': {
-                'min_length_digit': PASS_REQ["password_content"]["min_length_digit"],
-                'min_length_alpha': PASS_REQ["password_content"]["min_length_alpha"],
-                'min_length_special': PASS_REQ["password_content"]["min_length_special"],
-                'min_length_lower': PASS_REQ["password_content"]["min_length_lower"],
-                'min_length_upper': PASS_REQ["password_content"]["min_length_upper"],
-                'special_characters': PASS_REQ["password_content"]["special_characters"]
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': PASS_REQ["min_length"],
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
+        {
         'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
         'OPTIONS': {
             'last_passwords': PASS_REQ["password_history"]  # Only the last 3 passwords entered by the user

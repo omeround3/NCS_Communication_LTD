@@ -168,7 +168,8 @@ USE_TZ = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AXES_LOGIN_FAILURE_LIMIT = PASS_REQ["login_attemps_limit"]
-AXES_COOLOFF_TIME =PASS_REQ["login_block_cooldown"]
+
+AXES_COOLOFF_TIME = PASS_REQ["login_block_cooldown"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

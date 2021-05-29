@@ -7,6 +7,7 @@ from django.conf import settings
 from django_password_validators.password_history.password_validation import UniquePasswordsValidator
 from django_password_validators.password_character_requirements.password_validation import PasswordCharacterValidator
 
+
 def _my_help_text_unique(self):
     return _(f'Your password must always differ from your last {self.last_passwords} passwords.')
 

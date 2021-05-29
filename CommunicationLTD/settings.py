@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_password_validators.password_history',
     'core',
     'crispy_forms',
+    'axes',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -65,7 +66,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'axes.backends.AxesBackend',
+    ]
 
 ROOT_URLCONF = 'CommunicationLTD.urls'
 
@@ -129,30 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
-]
-
-AUTH_PASSWORD_VALIDATORS_2 = [
-    {
-        'NAME': 'django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator',
-        'OPTIONS': {
-                'min_length_digit': PASS_REQ["password_content"]["min_length_digit"],
-                'min_length_alpha': PASS_REQ["password_content"]["min_length_alpha"],
-                'min_length_special': PASS_REQ["password_content"]["min_length_special"],
-                'min_length_lower': PASS_REQ["password_content"]["min_length_lower"],
-                'min_length_upper': PASS_REQ["password_content"]["min_length_upper"],
-                'special_characters': PASS_REQ["password_content"]["special_characters"]
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': PASS_REQ["min_length"],
-        }
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
+        {
         'NAME': 'django_password_validators.password_history.password_validation.UniquePasswordsValidator',
         'OPTIONS': {
             'last_passwords': PASS_REQ["password_history"]  # Only the last 3 passwords entered by the user
@@ -182,6 +166,9 @@ USE_L10N = True
 USE_TZ = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AXES_LOGIN_FAILURE_LIMIT = PASS_REQ["login_attemps_limit"]
+AXES_COOLOFF_TIME =PASS_REQ["login_block_cooldown"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

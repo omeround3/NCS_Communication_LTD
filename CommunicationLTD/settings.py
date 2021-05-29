@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_PASSWORD_VALIDATORS_2 = [
+AUTH_PASSWORD_VALIDATORS_CHANGE = [
     {
         'NAME': 'django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator',
         'OPTIONS': {

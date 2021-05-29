@@ -9,7 +9,7 @@ from django_password_validators.password_character_requirements.password_validat
 
 
 class MySetPasswordForm(SetPasswordForm):
-    validators = password_validation.get_password_validators(settings.AUTH_PASSWORD_VALIDATORS_2)
+    validators = password_validation.get_password_validators(settings.AUTH_PASSWORD_VALIDATORS_CHANGE)
 
     new_password1 = forms.CharField(
         label=_("New password"),

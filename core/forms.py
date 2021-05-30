@@ -5,12 +5,14 @@ from django.contrib.auth.models import User
 from django.forms.models import ModelForm
 from django.core.exceptions import ValidationError
 from core.models import Client
+from django.utils.translation import ugettext as _, ungettext
 
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
-	# email = forms.EmailField(required=True)
-	email = forms.CharField(required=True)
+	# Uncomment to prevent SQLI
+	email = forms.EmailField(required=True)
+	# email = forms.CharField(required=True)
 
 
 	class Meta:
@@ -18,14 +20,13 @@ class NewUserForm(UserCreationForm):
 		fields = ("username", "email", "password1", "password2")
 
 	def save(self, commit=True):
-		print("Im here")
 		user = super(NewUserForm, self).save(commit=False)
 		user.email = self.cleaned_data['email']
 		if commit:
 			user.save()
 		return user
 
-	# Uncomment to protect against register SQLI
+	# Uncomment to prevent SQLI
 	def clean(self):
 		email = self.cleaned_data.get('email')
 		if User.objects.filter(email=email).exists():

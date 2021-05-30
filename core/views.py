@@ -1,19 +1,11 @@
 from django.db import connection
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from .forms import ClientSearchForm, ContactForm, NewUserForm, ClientForm, NewPasswordResetForm
-=======
-from .forms import NewUserForm, ClientForm, NewPasswordResetForm
->>>>>>> 86219a6656630ec6481dfcda95fcf4fe824dd1fa
+from .forms import ClientSearchForm, NewUserForm, ClientForm, NewPasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
-<<<<<<< HEAD
-from django.http import HttpResponse, HttpResponseRedirect
-=======
-from django.http import HttpResponse,HttpResponseRedirect, HttpResponseNotFound
->>>>>>> 86219a6656630ec6481dfcda95fcf4fe824dd1fa
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from .utils import *
 from .models import Client
 from django.contrib.auth.models import User
@@ -69,7 +61,55 @@ def logout_request(request):
     messages.info(request, "You have successfully logged out.")
     return redirect('/')
 
-# # Registiration view
+# Registiration view - SQLI
+# def register_request(request):
+#     # The request method 'POST' indicates
+#     # that the form was submitted
+#     if request.method == "POST":
+#         # form = NewUserForm
+#         user_cursor = connection.cursor()
+#         email_cursor = connection.cursor()
+
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         pass1 = request.POST['password1']
+#         pass2 = request.POST['password1']
+
+#         user_query = f"SELECT username from auth_user where username=\'{username}\'"
+#         email_query = f"SELECT email from auth_user where email=\'{email}\'"
+
+#         if user_cursor.execute(user_query):
+#             messages.error(
+#                 request, f"Username {set(map(lambda tup: tup[0],user_cursor.fetchall()))} Already In Use")
+#             return HttpResponseRedirect("/register")
+#         if email_cursor.execute(email_query):
+#             messages.error(
+#                 request, f"Email {set(map(lambda tup: tup[0],email_cursor.fetchall()))} Already In Use")
+#             return HttpResponseRedirect("/register")
+#         if pass1 != pass2:
+#             messages.error(request, "Passwords Doesn't Match")
+#             return HttpResponseRedirect("/register")
+
+#         # email = blablablabla@gmail.com' OR '1'='1
+
+#         # Our DB is managed by django models, so we must verify each form before we are able to save it,
+#         # Therefor we cannot register an email/username with an SQL query in it.
+#         # but for the sake of the project we will assume that there is some register model implemented here which allows INSERT directly to our DB
+#         # SOME SQL REGISTER ACTION
+#         # SOME SQL REGISTER ACTION
+#         # SOME SQL REGISTER ACTION
+#         # SOME SQL REGISTER ACTION
+#         # if form.is_valid():
+#         #     # If the form is valid, save the user and login
+#         #     user = form.save()
+#         #     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+#         #     messages.success(
+#         #         request, "Registration successful, You are now logged in")
+
+#     form = NewUserForm
+#     return render(request=request, template_name="main/register.html", context={"register_form": form})
+
+# # Registiration view - Safe
 def register_request(request):
     # The request method 'POST' indicates
     # that the form was submitted
@@ -108,18 +148,6 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     return render(request, 'main/changepassword.html', {'form': form})
 
-<<<<<<< HEAD
-# Wrapper function to check user authentication
-
-
-def check_user_authentication(request, path):
-    if request.user.is_authenticated:
-        return render(request, 'main/{0}'.format(path))
-    else:
-        return render(request, 'main/401.html')
-
-=======
->>>>>>> 86219a6656630ec6481dfcda95fcf4fe824dd1fa
 
 def dashboard_request(request):
     if request.user.is_authenticated:
@@ -129,7 +157,7 @@ def dashboard_request(request):
             print("Valid")
             user = search_form.cleaned_data['search_str']
             clients = Client.objects.all().filter(first_name=user)
-        return render(request, 'main/dashboard.html', {'search_form':search_form,'clients': clients})
+        return render(request, 'main/dashboard.html', {'search_form': search_form, 'clients': clients})
     else:
         return render(request, '401.html')
 
@@ -149,12 +177,12 @@ def clients_request(request):
                 messages.success(
                     request, f"You have successfully added a new client.")
                 # Redirect to clients page
-                return render(request=request, template_name="main/clients.html", context={"search_form":search_form,"client_form": form, 'clients': clients})
+                return render(request=request, template_name="main/clients.html", context={"search_form": search_form, "client_form": form, 'clients': clients})
             else:
                 messages.error(request, "Error creating a new client.")
         form = ClientForm
         search_form = ClientSearchForm()
-        return render(request=request, template_name="main/clients.html", context={"search_form":search_form,"client_form": form, 'clients': clients})
+        return render(request=request, template_name="main/clients.html", context={"search_form": search_form, "client_form": form, 'clients': clients})
     else:
         return render(request, '401.html')
 
@@ -169,7 +197,6 @@ def dread_request(request):
 
 
 def password_reset_request(request):
-<<<<<<< HEAD
     if request.method == "POST":
         password_reset_form = PasswordResetForm(request.POST)
         if password_reset_form.is_valid():
@@ -199,36 +226,6 @@ def password_reset_request(request):
                     return redirect("/reset_done")
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form": password_reset_form})
-=======
-	if request.method == "POST":
-		password_reset_form = PasswordResetForm(request.POST)
-		if password_reset_form.is_valid():
-			data = password_reset_form.cleaned_data['email']
-			associated_users = User.objects.filter(Q(email=data))
-			if associated_users.exists():
-				for user in associated_users:
-					subject = "Password Reset Requested"
-					email_template_name = "main/password/password_reset_email.txt"
-					c = {
-					"email":user.email,
-					'domain':'127.0.0.1:8000',
-					'site_name': 'Website',
-					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
-					"user": user,
-					'token': default_token_generator.make_token(user),
-					'protocol': 'http',
-					}
-					request.session['token'] = c["token"]
-					request.session['uid'] = c["uid"]
-					email = render_to_string(email_template_name, c)
-					try:
-						send_mail(subject, email, 'CommunicationLTD@example.com' , [user.email], fail_silently=False)
-					except BadHeaderError:
-						return HttpResponse('Invalid header found.')
-					return redirect ('/reset_done')
-	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name='main/password/password_reset.html', context={'password_reset_form':password_reset_form})
->>>>>>> 86219a6656630ec6481dfcda95fcf4fe824dd1fa
 
 # Password validate verification code
 
@@ -245,20 +242,9 @@ def password_reset_done(request):
             token = request.session['token']
             uid = request.session['uid']
             # Check user token
-<<<<<<< HEAD
             if token == user_token:
                 return redirect('password_reset_confirm', uidb64=uid, token=token)
             else:
                 return redirect("/password_reset")
     form = NewPasswordResetForm()
     return render(request=request, template_name="main/password/password_reset_done.html", context={"form": form})
-=======
-			if token == user_token:
-				return redirect ('password_reset_confirm',uidb64 = uid, token = token)
-			else:
-				return redirect('/password_reset')
-	form = NewPasswordResetForm()
-	return render(request=request, template_name='main/password/password_reset_done.html', context={'form':form})
-
-
->>>>>>> 86219a6656630ec6481dfcda95fcf4fe824dd1fa

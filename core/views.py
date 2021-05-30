@@ -27,10 +27,7 @@ from django.contrib.auth.models import User
 def index(request):
     return render(request, "main/index.html")
 
-# Login view
-######### PATCHED SQL INJECTION Vunlerable login_request #########
-
-
+# Login view - SQLI Protected
 def login_request(request):
     # The request method 'POST' indicates
     # that the form was submitted
@@ -58,56 +55,57 @@ def login_request(request):
     form = AuthenticationForm()
     return render(request=request, template_name="main/login.html", context={"login_form": form})
 
+## Login view - SQLI Vulnerable - login to admin user:
+## Enter Username: Afeka, Password: ' OR 1=1#
+# def login_request(request):
+#     # The request method 'POST' indicates
+#     # that the form was submitted
+#     if request.method == "POST":
+#         # Create a form instance with the submitted data
+#         form = AuthenticationForm(request, data=request.POST)
+#         # Validate the form
+#         if form.is_valid():
+#             #  If the form is valid, get the user credenetials
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#         try:
+#             user = authenticate(username=username, password=password)
+#             if user:
+#                 login(request, user,
+#                       backend='django.contrib.auth.backends.ModelBackend')
+#                 messages.info(request, f"You are now logged in as {username}.")
+#                 # Redirect to homepage
+#                 return redirect('/')
+#             else:
+#                 messages.error(request, "Invalid username or password.")
+#         except:
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
+#             sqlQuery = "SELECT * FROM auth_user where username= \'{}\' AND password= \'{}\'".format(
+#                 username, password)
+#             cursor = connection.cursor()
+#             if (cursor.execute(sqlQuery)):
+#                 username = form.cleaned_data.get('username')
+#                 user = User.objects.get(username=username)
+#                 login(request, user,
+#                       backend='django.contrib.auth.backends.ModelBackend')
+#                 messages.info(request, f"You are now logged in as {username}.")
+#                 return redirect('/')
+#             else:
+#                 messages.error(request, "Invalid username or password.")
+#     form = AuthenticationForm()
+#     return render(request=request, template_name="main/login.html", context={"login_form": form})
 
-######### SQL INJECTION Vunlerable login_request #########
-def login_request(request):
-    # The request method 'POST' indicates
-    # that the form was submitted
-    if request.method == "POST":
-        # Create a form instance with the submitted data
-        form = AuthenticationForm(request, data=request.POST)
-        # Validate the form
-        if form.is_valid():
-            #  If the form is valid, get the user credenetials
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-        try:
-            user = authenticate(username=username, password=password)
-            if user:
-                login(request, user,
-                      backend='django.contrib.auth.backends.ModelBackend')
-                messages.info(request, f"You are now logged in as {username}.")
-                # Redirect to homepage
-                return redirect('/')
-            else:
-                messages.error(request, "Invalid username or password.")
-        except:
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            sqlQuery = "SELECT * FROM auth_user where username= \'{}\' AND password= \'{}\'".format(
-                username, password)
-            cursor = connection.cursor()
-            if (cursor.execute(sqlQuery)):
-                username = form.cleaned_data.get('username')
-                user = User.objects.get(username=username)
-                login(request, user,
-                      backend='django.contrib.auth.backends.ModelBackend')
-                messages.info(request, f"You are now logged in as {username}.")
-                return redirect('/')
-            else:
-                messages.error(request, "Invalid username or password.")
-    form = AuthenticationForm()
-    return render(request=request, template_name="main/login.html", context={"login_form": form})
+
 
 # Logout view
-
-
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect('/')
 
-# Registiration view - SQLI
+## Register view - SQLI Vulnerable - Get all user's emails:
+## Enter Username: DONTCARE, Password:DONTCARE, Email: a@gmail.com' OR '1'='1, 
 # def register_request(request):
 #     # The request method 'POST' indicates
 #     # that the form was submitted
@@ -151,11 +149,10 @@ def logout_request(request):
 #         #     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 #         #     messages.success(
 #         #         request, "Registration successful, You are now logged in")
-
 #     form = NewUserForm
 #     return render(request=request, template_name="main/register.html", context={"register_form": form})
 
-# # Registiration view - Safe
+# Register view - SQLI Protected
 def register_request(request):
     # The request method 'POST' indicates
     # that the form was submitted

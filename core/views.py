@@ -1,7 +1,6 @@
 from django.db import connection
 from django.shortcuts import render, redirect
-from .forms import ClientSearchForm, ContactForm, NewUserForm, ClientForm, NewPasswordResetForm
-from .forms import ClientSearchForm, ContactForm, NewUserForm, ClientForm, NewPasswordResetForm
+from .forms import ClientSearchForm, NewUserForm, ClientForm, NewPasswordResetForm
 from .forms import NewUserForm, ClientForm, NewPasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
@@ -221,7 +220,7 @@ def clients_request(request):
                 messages.success(
                     request, f"You have successfully added a new client.")
                 # Redirect to clients page
-                return render(request=request, template_name="main/clients.html", context={"search_form": search_form, "client_form": form, 'clients': clients})
+                return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
             else:
                 messages.error(request, "Error creating a new client.")
         form = ClientForm

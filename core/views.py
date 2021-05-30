@@ -1,10 +1,14 @@
+from django.db import connection
 from django.shortcuts import render, redirect
 from .forms import ClientSearchForm, ContactForm, NewUserForm, ClientForm, NewPasswordResetForm
+from .forms import ClientSearchForm, ContactForm, NewUserForm, ClientForm, NewPasswordResetForm
+from .forms import NewUserForm, ClientForm, NewPasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from .utils import *
 from .models import Client
 from django.contrib.auth.models import User
@@ -25,9 +29,9 @@ def index(request):
     return render(request, "main/index.html")
 
 # Login view
-
-
 ######### PATCHED SQL INJECTION Vunlerable login_request #########
+
+
 def login_request(request):
     # The request method 'POST' indicates
     # that the form was submitted
@@ -51,6 +55,7 @@ def login_request(request):
                 messages.error(request, "Invalid username or password.")
         else:
             messages.error(request, "Invalid username or password.")
+            return HttpResponseRedirect("/login")
     form = AuthenticationForm()
     return render(request=request, template_name="main/login.html", context={"login_form": form})
 
@@ -103,7 +108,7 @@ def logout_request(request):
     messages.info(request, "You have successfully logged out.")
     return redirect('/')
 
-# Registiration views
+# Registiration view
 
 
 def register_request(request):
@@ -123,12 +128,12 @@ def register_request(request):
             return redirect('/')
         messages.error(
             request, "Unsuccessful registration. Invalid information.")
+        return HttpResponseRedirect("/register")
     form = NewUserForm
     return render(request=request, template_name="main/register.html", context={"register_form": form})
 
+
 # Change password view
-
-
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -165,7 +170,7 @@ def dashboard_request(request):
 def clients_request(request):
     if request.user.is_authenticated:
         clients = Client.objects.all()
-        if request.method == "POST":
+        if request.method == 'POST':
             # Create a form instance with the submitted data
             form = ClientForm(request.POST)
             # Validate the form
@@ -174,24 +179,24 @@ def clients_request(request):
                 messages.success(
                     request, f"You have successfully added a new client.")
                 # Redirect to clients page
-                return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
+                return render(request=request, template_name="main/clients.html", context={"search_form": search_form, "client_form": form, 'clients': clients})
             else:
                 messages.error(request, "Error creating a new client.")
         form = ClientForm
-        return render(request=request, template_name="main/clients.html", context={"client_form": form, 'clients': clients})
+        search_form = ClientSearchForm()
+        return render(request=request, template_name="main/clients.html", context={"search_form": search_form, "client_form": form, 'clients': clients})
     else:
-        return render(request, 'main/401.html')
+        return render(request, '401.html')
 
 
 def dread_request(request):
     if request.user.is_authenticated:
-        return render(request=request, template_name="main/dread.html")
+        return render(request=request, template_name='main/dread.html')
     else:
-        return render(request, 'main/401.html')
+        return render(request, '401.html')
+
 
 # Password reset Main page
-
-
 def password_reset_request(request):
     if request.method == "POST":
         password_reset_form = PasswordResetForm(request.POST)
@@ -219,13 +224,12 @@ def password_reset_request(request):
                                   [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
-                    return redirect("/reset_done")
+                    return redirect('/reset_done')
     password_reset_form = PasswordResetForm()
-    return render(request=request, template_name="main/password/password_reset.html", context={"password_reset_form": password_reset_form})
+    return render(request=request, template_name='main/password/password_reset.html', context={'password_reset_form': password_reset_form})
+
 
 # Password validate verification code
-
-
 def password_reset_done(request):
     # The request method 'POST' indicates
     # that the form was submitted
@@ -241,6 +245,6 @@ def password_reset_done(request):
             if token == user_token:
                 return redirect('password_reset_confirm', uidb64=uid, token=token)
             else:
-                return redirect("/password_reset")
-    form = NewPasswordResetForm()
-    return render(request=request, template_name="main/password/password_reset_done.html", context={"form": form})
+                return redirect('/password_reset')
+        form = NewPasswordResetForm()
+        return render(request=request, template_name='main/password/password_reset_done.html', context={'form': form})

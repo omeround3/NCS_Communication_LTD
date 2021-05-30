@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import warnings
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +19,5 @@ def main():
 
 
 if __name__ == '__main__':
+    warnings.filterwarnings(action="ignore", category=UserWarning)
     main()

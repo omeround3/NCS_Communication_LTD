@@ -39,7 +39,7 @@ class ClientForm(ModelForm):
 		fields = ['first_name', 'last_name', 'email', 'cellphone', 'bandwidth', 'cost']
 
 class ClientSearchForm(forms.Form):
-	search_str = forms.CharField(label='search user')
+	search_str = forms.CharField(label='Search User')
 
 class NewPasswordResetForm(forms.Form):
 	verification_code = forms.CharField(required=True,label='Verification Code')

@@ -8,12 +8,6 @@
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Communication LTD</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form method="POST">
-            {% csrf_token %}
-            {{ search_form.as_table }}                    
-            <button class="btn btn-primary" type="submit">Search</button>
-        </form>
         <!-- Navbar-->
         <ul class="navbar-nav ml-auto ml-md-0">
             <li class="nav-item dropdown">
@@ -123,6 +117,11 @@
                         <div class="card-header">
                             <i class="fas fa-table mr-1"></i>
                             Clients
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ search_form.as_table }}                    
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
                         </div>
                         <div class="card-body">
                             <div class = "clients">

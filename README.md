@@ -6,7 +6,7 @@ A Web Project as part of the Network Communication Course at Afeka College.
 
 ## How to run the project
 
-1. Clone this reposititory to your local computer
+1. Clone this repository to your local computer
 2. Install python virtual enviroment using `python3 -m pip install --user virtualenv` on macOS or Linux. On Windows run `py -m pip install --user virtualenv`
 3. Create a virtual enviroment using `python3 -m venv env` on macOS or Linux. On Windows run `py -m venv env`
 4. Activate the virutal enviroment using `source env/bin/activate` on macOS or Linux. On Windows run `.\env\Scripts\activate`
